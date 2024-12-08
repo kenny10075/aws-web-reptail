@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伴獸人</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* 全局樣式 */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+    }
+
+    header {
+      background-color: #000;
+      padding: 10px 20px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .nav-icons a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    /* 商品區域樣式 */
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .product-section {
+      width: 70%; /* 控制區域寬度 */
+      padding: 20px;
+      background-color: #202020;
+      border-radius: 8px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .breadcrumb a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .product-header h2 {
+      margin: 0;
+    }
+
+    .product-controls select {
+      background-color: #101010;
+      color: #fff;
+      border: 1px solid #4CAF50;
+      padding: 5px;
+      border-radius: 4px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 商品展示為 3 列 */
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: #303030;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .product-card p {
+      font-size: 1rem;
+      color: #4CAF50;
+    }
+
+    .product-card p.old-price {
+      color: #aaa;
+      text-decoration: line-through;
+      margin-bottom: 5px;
+    }
+
+    footer {
+      background-color: #202020;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 導航欄 -->
+  <header>
+    <nav class="navbar">
+        <div class="logo">伴獸人 THE ORCS</div>
+        <ul class="nav-links">
+          <li><a href="home.html">首頁</a></li>
+          <li><a href="about.html">關於我們</a></li>
+          <li class="dropdown">
+            <a href="">所有商品 ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="new.html">所有商品</a></li>
+              <li><a href="sale.html">優惠專區</a></li>
+              
+              <li><a href="supplies.html">周邊用品及飼料</a></li>
+            </ul>
+          </li>
+  
+        </ul>
+        <div class="nav-icons">
+            <i class="icon-search" onclick="openSearchModal()">🔍</i>
+          <a href="contact.html"><i class="icon-message">💬</i></a>
+          <a href="login.html"><i class="icon-login">👤</i></a>
+          <a href="cart.html"><i class="icon-cart">🛒</i></a>
+        </div>
+      </nav>
+  </header>
+<!-- 搜尋模態框 -->
+<div class="search-modal" id="searchModal">
+    <span class="close-btn" onclick="closeSearchModal()">✖</span>
+    <h2>找商品</h2>
+    <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+  </div>
+  <!-- 主內容區 -->
+  <main>
+    <section class="product-section">
+      <div class="breadcrumb">
+        <a href="home.html">全部商品</a> > 優惠專區
+      </div>
+      <div class="product-header">
+        <h2>優惠專區</h2>
+        <div class="product-controls">
+          <select>
+            <option>商品排序</option>
+            <option>價格從高到低</option>
+            <option>價格從低到高</option>
+          </select>
+          <select>
+            <option>每頁顯示 24 個</option>
+            <option>每頁顯示 48 個</option>
+          </select>
+        </div>
+      </div>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="肥尾守宮．WO Oreo het Patty.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
+          <h3>肥尾守宮．WO Oreo het Patty</h3>
+          <p class="old-price">NT$4,500</p>
+          <p>NT$3,680</p>
+        </div>
+        <div class="product-card">
+          <img src="肥尾守宮：Oreo.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
+          <h3>肥尾守宮：Oreo</h3>
+          <p class="old-price">NT$4,880</p>
+          <p>NT$3,680</p>
+        </div>
+        <div class="product-card">
+          <img src="波子角蛙.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
+          <h3>【限時優惠】波子角蛙</h3>
+          <p class="old-price">NT$7,600</p>
+          <p>NT$1,800 ~ NT$3,600</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer>
+    <p>© 2024 伴獸人. All rights reserved.</p>
+  </footer>
+  <script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>伴獸人</title>
+  
+</head>
+<body>
+  <!-- 導航欄 -->
+  <header>
+    <nav class="navbar">
+        <div class="logo">伴獸人 THE ORCS</div>
+        <ul class="nav-links">
+          <li><a href="home.html">首頁</a></li>
+          <li><a href="about.html">關於我們</a></li>
+          <li class="dropdown">
+            <a href="#">所有商品 ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="new.html">所有商品</a></li>
+              <li><a href="sale.html">優惠專區</a></li> 
+              <li><a href="supplies.html">周邊用品及飼料</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="nav-icons">
+          <i class="icon-search" onclick="openSearchModal()">🔍</i>
+          <a href="contact.html"><i class="icon-message">💬</i></a>
+          <a href="login.html"><i class="icon-login">👤</i></a>
+          <a href="cart.html"><i class="icon-cart">🛒</i></a>
+        </div>
+      </nav>
+  </header>
+
+  <!-- 搜尋模態框 -->
+  <div class="search-modal" id="searchModal">
+    <span class="close-btn" onclick="closeSearchModal()">✖</span>
+    <h2>找商品</h2>
+    <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+  </div>
+ <!-- 主內容區 -->
+ <main>
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>每週新品</h1>
+      <p>每週六中午十二點準時上架<br>週週更新 週週有驚喜</p>
+    </div>
+  </section>
+</main>
+
+  <!-- 頁尾 -->
+  <footer>
+    <p>此網頁無商業用途，做作業用的</p>
+  </footer>
+
+  <script src="search.js"></script>
+</body>
+</html>
