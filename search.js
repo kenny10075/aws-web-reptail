@@ -30,4 +30,49 @@ const products = [
       }
     }
   }
+  function openContactModal() {
+    document.getElementById('contactModal').classList.add('active');
+  }
+  
+  function closeContactModal() {
+    document.getElementById('contactModal').classList.remove('active');
+  }
+  
+  function submitContactForm() {
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const emailError = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+  
+    let valid = true;
+  
+    // 驗證電子郵件格式
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      emailError.style.display = 'block';
+      emailError.textContent = '請輸入有效的電子郵件地址';
+      valid = false;
+    } else {
+      emailError.style.display = 'none';
+    }
+  
+    // 驗證訊息內容是否非空
+    if (!message) {
+      messageError.style.display = 'block';
+      messageError.textContent = '訊息不能為空';
+      valid = false;
+    } else {
+      messageError.style.display = 'none';
+    }
+  
+    if (valid) {
+      alert('感謝您的聯絡，我們會儘快回覆！');
+  
+      // 清空輸入框內容
+      document.getElementById('email').value = '';
+      document.getElementById('message').value = '';
+  
+      closeContactModal();
+    }
+  }
   
