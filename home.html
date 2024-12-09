@@ -27,7 +27,7 @@
     }
 
     .carousel-images img {
-      max-width: 80%; /* 限制圖片最大寬度 */
+      max-width: 70%; /* 限制圖片最大寬度 */
       height: auto; /* 保持圖片比例 */
       margin: auto; /* 確保圖片置中 */
     }
@@ -145,28 +145,35 @@
       </div>
       </div>
     </section>
+    <!-- 單一輪播 -->
     <div class="carousel">
       <div class="carousel-images">
         <div>
-          <img src="charlie.jpg" alt="商品1"style="width: 1000px; height: 600px;">
-          <div class="carousel-text">
-          </div>
+          <img src="charlie.jpg" alt="商品1">
         </div>
         <div>
-          <img src="阿肥肥.jpg" alt="商品2"style="width: 1000px; height: 600px;">
-          <div class="carousel-text">
-          </div>
+          <img src="阿肥肥.jpg" alt="商品2">
         </div>
         <div>
-          <img src="牡林.jpg" alt="商品3"style="width: 1000px; height: 600px;">
-          <div class="carousel-text">
-          </div>
+          <img src="牡林.jpg" alt="商品3">
+        </div>
+        <div>
+          <img src="willy.jpg" alt="商品4">
+        </div>
+        <div>
+          <img src="阿囉.jpg" alt="商品5">
+        </div>
+        <div>
+          <img src="小赫.jpg" alt="商品6">
         </div>
       </div>
       <div class="dots-container">
         <span class="dot active" onclick="moveToSlide(0)"></span>
         <span class="dot" onclick="moveToSlide(1)"></span>
         <span class="dot" onclick="moveToSlide(2)"></span>
+        <span class="dot" onclick="moveToSlide(3)"></span>
+        <span class="dot" onclick="moveToSlide(4)"></span>
+        <span class="dot" onclick="moveToSlide(5)"></span>
       </div>
     </div>
   </main>
@@ -194,32 +201,31 @@
 
   <!-- 頁尾 -->
   <footer>
-    <p>此網頁無商業用途，做作業用的</p>
+    <p><h1>此網頁無商業用途，做作業用的</h1></p>
   </footer>
 
   <script>
-    let currentIndex = 0;
+ let currentIndex = 0;
 
-    function moveToSlide(index) {
-      const images = document.querySelector('.carousel-images');
-      const dots = document.querySelectorAll('.dot');
+function moveToSlide(index) {
+  const images = document.querySelector('.carousel-images');
+  const dots = document.querySelectorAll('.dot');
 
-      // 移動圖片
-      images.style.transform = `translateX(-${index * 100}%)`;
+  // 移動圖片
+  images.style.transform = `translateX(-${index * 100}%)`;
 
-      // 更新點的樣式
-      dots.forEach(dot => dot.classList.remove('active'));
-      dots[index].classList.add('active');
+  // 更新點的樣式
+  dots.forEach(dot => dot.classList.remove('active'));
+  dots[index].classList.add('active');
 
-      currentIndex = index;
-    }
+  currentIndex = index;
+}
 
-    function autoSlide() {
-      const totalSlides = document.querySelectorAll('.carousel-images > div').length;
-      currentIndex = (currentIndex + 1) % totalSlides;
-      moveToSlide(currentIndex);
-    }
-
+function autoSlide() {
+  const totalSlides = document.querySelectorAll('.carousel-images > div').length;
+  currentIndex = (currentIndex + 1) % totalSlides;
+  moveToSlide(currentIndex);
+}
     // 自動輪播
     setInterval(autoSlide, 5000); // 每 10 秒切換一次
   </script>
