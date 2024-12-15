@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伴獸人</title>
+  <script>
+    const API_BASE_URL = "https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com";
+
+    // 註冊功能
+    async function registerUser(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const payload = { email, username, password };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("註冊成功！");
+                window.location.href = "login.html"
+            } else {
+                alert("註冊失敗: " + data.message);
+            }
+        } catch (error) {
+            alert("錯誤：" + error.message);
+        }
+    }
+
+    // 登入功能
+    async function loginUser(event) {
+        event.preventDefault();
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        const payload = { email, password };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("登入成功！");
+                fetchUserInfo(email);
+            } else {
+                alert("登入失敗: " + data.message);
+            }
+        } catch (error) {
+            alert("錯誤：" + error.message);
+        }
+    }
+
+    // 取得用戶資訊
+    async function fetchUserInfo(email) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/user/${email}`, { method: 'GET' });
+            const userInfo = await response.json();
+            document.getElementById("user-info").innerText = 
+                `用戶名: ${userInfo.username}, 電子郵件: ${userInfo.email}`;
+        } catch (error) {
+            alert("無法取得用戶資訊：" + error.message);
+        }
+    }
+  </script>
+  <style>
+    /* 輪播區域樣式 */
+    .carousel {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-images > div {
+      flex: 0 0 100%; /* 每個幻燈片占據 100% 的寬度 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-images img {
+      max-width: 70%; /* 限制圖片最大寬度 */
+      height: auto; /* 保持圖片比例 */
+      margin: auto; /* 確保圖片置中 */
+    }
+
+    .carousel-text {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    .carousel-text h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .carousel-text p {
+      font-size: 1rem;
+    }
+
+    .dots-container {
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+    }
+
+    .dot {
+      height: 10px;
+      width: 10px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background-color: #4CAF50;
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 10;
+    }
+
+    .scroll-down img {
+      width: 40px;
+      height: 40px;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-5px) translateX(-50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 導航欄 -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">伴獸人 THE ORCS</div>
+      <ul class="nav-links">
+        <li><a href="home.html">首頁</a></li>
+        <li><a href="about.html">關於我們</a></li>
+        <li class="dropdown">
+          <a href="#">所有商品 ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="new.html">所有商品</a></li>
+            <li><a href="reptile.html">爬蟲專區</a></li>
+            <li><a href="sale.html">優惠專區</a></li> 
+            <li><a href="supplies.html">周邊用品及飼料</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="nav-icons">
+        <i class="icon-search" onclick="openSearchModal()">🔍</i>
+        <i class="icon-message" onclick="openContactModal()">💬</i>
+        <a href="login.html"><i class="icon-login">👤</i></a>
+        <a href=""><i class="icon-cart">🛒</i></a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 搜尋模態框 -->
+  <div class="search-modal" id="searchModal">
+    <span class="close-btn" onclick="closeSearchModal()">✖</span>
+    <h2>找商品</h2>
+    <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+  </div>
+
+  <!-- 主內容區 -->
+  <main>
+   <!-- 註冊頁面 -->
+   <section class="register-section" style="text-align: center; padding: 20px;">
+    <h2>註冊帳號</h2>
+    <form id="registerForm" style="max-width: 400px; margin: auto;" onsubmit="registerUser(event)">
+      <div style="margin-bottom: 15px;">
+        <label for="email">電子郵件</label><br>
+        <input type="email" id="email" name="email" placeholder="請輸入您的電子郵件" required style="width: 100%; padding: 8px;">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label for="username">用戶名</label><br>
+        <input type="text" id="username" name="username" placeholder="請輸入您的用戶名" required style="width: 100%; padding: 8px;">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label for="password">密碼</label><br>
+        <input type="password" id="password" name="password" placeholder="請輸入您的密碼" required style="width: 100%; padding: 8px;">
+      </div>
+      <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">註冊</button>
+    </form>
+  </section>
+
+  </main>
+  <!-- 搜尋模態框 -->
+<div class="search-modal" id="searchModal">
+  <span class="close-btn" onclick="closeSearchModal()">✖</span>
+  <h2>找商品</h2>
+  <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+</div>
+  <!-- 聯絡我們模態框 -->
+  <div class="contact-modal" id="contactModal">
+    <div class="contact-modal-content">
+      <span class="close-btn" onclick="closeContactModal()">✖</span>
+      <h2>聯絡我們</h2>
+      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
+      <input type="email" id="email" placeholder="輸入你的電子信箱">
+      <span class="error" id="emailError">請填電郵</span>
+      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
+      <span class="error" id="messageError">請填寫訊息</span>
+      <button onclick="submitContactForm()">發送</button>
+    </div>
+  </div>
+
+
+
+  <!-- 頁尾 -->
+  <footer>
+    <p><h1>此網頁無商業用途，做作業用的</h1></p>
+  </footer>
+
