@@ -6,7 +6,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東大爬爬</title>
   <style>
-    
+     body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+    }
+
+    header {
+      background-color: #202020;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .cart-container {
+      width: 70%;
+      margin: 20px auto;
+      background-color: #303030;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #4CAF50;
+    }
+
+    .cart-item h3, .cart-item p {
+      margin: 0;
+    }
+
+    .input-group label, .input-group input {
+      display: block;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .pay-btn {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    .return-btn {
+      background-color: #888;
+      color: #fff;
+    }
+    .delete-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
   </style>
 </head>
 <body>
@@ -34,6 +102,7 @@
         <i class="icon-cart" onclick="openCartModal()">🛒</i>
       </div>
     </nav>
+    <h1>購物車</h1>
   </header>
 
   <!-- 搜尋模態框 -->
@@ -45,7 +114,21 @@
 
   <!-- 主內容區 -->
   <main>
+    <div class="cart-container">
+        <div id="cartItems"></div>
     
+        <div class="input-group">
+          <label>電話號碼：</label>
+          <input type="tel" id="phone" placeholder="輸入電話號碼">
+          <label>宅配地址：</label>
+          <input type="text" id="address" placeholder="輸入宅配地址">
+          <label>付款方式：</label>
+          <input type="text" value="信用卡付款" disabled>
+        </div>
+        <button class="clear-btn" onclick="deleteAllCartItems()">全部刪除</button>
+        <button class="return-btn" onclick="goBack()">返回</button>
+        <button class="pay-btn" onclick="processPayment()">付款</button>
+      </div>
     
   </main>
   <!-- 搜尋模態框 -->
@@ -67,7 +150,119 @@
       <button onclick="submitContactForm()">發送</button>
     </div>
   </div>
+  <script>
+// AWS API 的基礎 URL
+const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 替換為您的 API Gateway URL
 
+// 從資料庫讀取購物車商品
+async function fetchCartItems() {
+  try {
+    const response = await fetch(`${apiEndpoint}/product`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error('無法取得購物車資料');
+    }
+
+    const cartItems = await response.json(); // 從 API 獲取商品列表
+    displayCartItems(cartItems.items); // 顯示購物車商品
+  } catch (error) {
+    console.error('錯誤：', error);
+    document.getElementById('cartItems').innerHTML = '<p>無法加載購物車資料，請稍後再試。</p>';
+  }
+}
+
+function displayCartItems(cartItems) {
+  const cartContainer = document.getElementById('cartItems');
+
+  cartContainer.innerHTML = cartItems.length
+    ? cartItems.map(item => `
+        <div class="cart-item">
+          <div>
+            <h3>${item.productName}</h3>
+            <p>NT$${item.price}</p>
+          </div>
+          <button class="delete-btn" onclick="deleteCartItem('${item.id}')">刪除</button>
+        </div>
+      `).join('')
+    : '<p>您的購物車是空的</p>';
+}
+
+// 初始化購物車
+fetchCartItems();
+
+    function goBack() {
+      window.location.href = 'home.html'; // 返回首頁
+    }
+
+    function processPayment() {
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+
+      if (!phone || !address) {
+        alert('請填寫完整的電話號碼和宅配地址！');
+        return;
+      }
+
+      alert('付款成功！商品即將配送到您的地址。');
+      localStorage.removeItem('cart'); // 清空購物車
+      window.location.href = 'home.html'; // 返回首頁
+    }
+    displayCartItems();
+
+async function deleteCartItem(productId) {
+    const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 替換為您的 API Gateway URL
+
+    try {
+        const response = await fetch(`${apiEndpoint}/product`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: productId }) // 在請求體中傳遞商品 ID
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+        alert('商品已刪除！');
+        fetchCartItems(); // 重新獲取購物車內容
+        } else {
+        alert('刪除失敗：' + result.message);
+        }
+    } catch (error) {
+        alert('發送請求時發生錯誤！');
+        console.error(error);
+    }
+    }
+
+
+
+async function deleteAllCartItems() {
+  const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 替換為您的 API Gateway URL
+
+  try {
+    const response = await fetch(`${apiEndpoint}/product`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clearAll: true }) // 傳遞 clearAll 標誌
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert('所有商品已刪除！');
+      fetchCartItems(); // 重新獲取購物車內容
+    } else {
+      alert('刪除失敗：' + result.message);
+    }
+  } catch (error) {
+    alert('發送請求時發生錯誤！');
+    console.error(error);
+  }
+}
+
+  </script>
 
   <!-- 頁尾 -->
   <footer>
