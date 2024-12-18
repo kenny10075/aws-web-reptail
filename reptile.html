@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>爬蟲專區</title>
+  <title>東大爬爬</title>
   <script>
     async function handleAddToCart(productName, price) {
-      const apiEndpoint = 'https://your-api-gateway-url/post-to-lambda'; // 這是你的 API Gateway URL
+      const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 這是你的 API Gateway URL
   
       const requestData = {
         productName: productName,
@@ -15,7 +15,7 @@
       };
   
       try {
-        const response = await fetch(apiEndpoint, {
+        const response = await fetch(`${apiEndpoint}/product`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

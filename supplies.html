@@ -4,7 +4,38 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>周邊用品及飼料</title>
+  <title>東大爬爬</title>
+  <script>
+    async function handleAddToCart(productName, price) {
+      const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 這是你的 API Gateway URL
+  
+      const requestData = {
+        productName: productName,
+        price: price
+      };
+  
+      try {
+        const response = await fetch(`${apiEndpoint}/product`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert('商品已加入購物車！');
+        } else {
+          alert('操作失敗：' + result.message);
+        }
+      } catch (error) {
+        alert('發送請求時發生錯誤！');
+        console.error(error);
+      }
+    }
+  </script>
   <style>
     /* 全局樣式 */
     body {
@@ -204,7 +235,6 @@
             +
           </button>
         </div>
-        <div class="product-card">
           <div class="product-card">
             <img src="Rep-Cal 爬蟲專用綜合維生素.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>Rep-Cal 爬蟲專用綜合維生素</h3>
