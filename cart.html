@@ -212,29 +212,30 @@ fetchCartItems();
     }
     displayCartItems();
 
-async function deleteCartItem(productId) {
+    async function deleteCartItem(productId) {
     const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 替換為您的 API Gateway URL
 
     try {
         const response = await fetch(`${apiEndpoint}/product`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: productId }) // 在請求體中傳遞商品 ID
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: productId }) // 在請求體中傳遞商品 ID
         });
 
         const result = await response.json();
 
         if (response.ok) {
-        alert('商品已刪除！');
-        fetchCartItems(); // 重新獲取購物車內容
+            alert('商品已刪除！');
+            fetchCartItems(); // 重新獲取購物車內容
         } else {
-        alert('刪除失敗：' + result.message);
+            alert('刪除失敗：' + result.message);
         }
     } catch (error) {
         alert('發送請求時發生錯誤！');
         console.error(error);
     }
-    }
+}
+
 
 
 
