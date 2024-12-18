@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>伴獸人</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    async function handleAddToCart(productName, price) {
+      const apiEndpoint = 'https://your-api-gateway-url/post-to-lambda'; // 這是你的 API Gateway URL
+  
+      const requestData = {
+        productName: productName,
+        price: price
+      };
+  
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert('商品已加入購物車！');
+        } else {
+          alert('操作失敗：' + result.message);
+        }
+      } catch (error) {
+        alert('發送請求時發生錯誤！');
+        console.error(error);
+      }
+    }
+  </script>
   <style>
     /* 全局樣式 */
     body {
@@ -161,7 +192,7 @@
             <i class="icon-search" onclick="openSearchModal()">🔍</i>
             <i class="icon-message" onclick="openContactModal()">💬</i>
             <i class="icon-login" onclick="openLoginModal()">👤</i>
-          <a href="cart.html"><i class="icon-cart">🛒</i></a>
+            <i class="icon-cart" onclick="openCartModal()">🛒</i>
         </div>
       </nav>
   </header>
@@ -188,7 +219,7 @@
   <main>
     <section class="product-section">
       <div class="breadcrumb">
-        <a href="home.html">全部商品</a> > 優惠專區
+        <a href="new.html">全部商品</a> > 優惠專區
       </div>
       <div class="product-header">
         <h2>優惠專區</h2>
@@ -206,18 +237,27 @@
           <h3>肥尾守宮．WO Oreo het Patty</h3>
           <p class="old-price">NT$4,500</p>
           <p>NT$3,680</p>
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
         <div class="product-card">
           <img src="肥尾守宮：Oreo.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
           <h3>肥尾守宮：Oreo</h3>
           <p class="old-price">NT$4,880</p>
           <p>NT$3,680</p>
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
         <div class="product-card">
           <img src="波子角蛙.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
           <h3>【限時優惠】波子角蛙</h3>
           <p class="old-price">NT$7,600</p>
           <p>NT$1,800</p>
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
       </div>
     </section>

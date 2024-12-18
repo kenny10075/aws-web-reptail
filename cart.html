@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東大爬爬</title>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <!-- 導航欄 -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">東大爬爬</div>
+      <ul class="nav-links">
+        <li><a href="home.html">首頁</a></li>
+        <li><a href="about.html">關於我們</a></li>
+        <li class="dropdown">
+          <a href="#">所有商品 ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="new.html">所有商品</a></li>
+            <li><a href="reptile.html">爬蟲專區</a></li>
+            <li><a href="sale.html">優惠專區</a></li> 
+            <li><a href="supplies.html">周邊用品及飼料</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="nav-icons">
+        <i class="icon-search" onclick="openSearchModal()">🔍</i>
+        <i class="icon-message" onclick="openContactModal()">💬</i>
+        <i class="icon-login" onclick="openLoginModal()">👤</i>
+        <i class="icon-cart" onclick="openCartModal()">🛒</i>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 搜尋模態框 -->
+  <div class="search-modal" id="searchModal">
+    <span class="close-btn" onclick="closeSearchModal()">✖</span>
+    <h2>找商品</h2>
+    <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+  </div>
+
+  <!-- 主內容區 -->
+  <main>
+    
+    
+  </main>
+  <!-- 搜尋模態框 -->
+<div class="search-modal" id="searchModal">
+  <span class="close-btn" onclick="closeSearchModal()">✖</span>
+  <h2>找商品</h2>
+  <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+</div>
+  <!-- 聯絡我們模態框 -->
+  <div class="contact-modal" id="contactModal">
+    <div class="contact-modal-content">
+      <span class="close-btn" onclick="closeContactModal()">✖</span>
+      <h2>聯絡我們</h2>
+      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
+      <input type="email" id="email" placeholder="輸入你的電子信箱">
+      <span class="error" id="emailError">請填電郵</span>
+      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
+      <span class="error" id="messageError">請填寫訊息</span>
+      <button onclick="submitContactForm()">發送</button>
+    </div>
+  </div>
+
+
+  <!-- 頁尾 -->
+  <footer>
+    <p><h1>此網頁無商業用途，做作業用的</h1></p>
+  </footer>
+
+  <script src="search.js"></script>
+</body>
+</html>

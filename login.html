@@ -7,34 +7,107 @@
   <title>東大爬爬</title>
   <script>
     const API_BASE_URL = "https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com";
+    // 當頁面加載時檢查 sessionStorage
+document.addEventListener('DOMContentLoaded', function() {
+    const username = sessionStorage.getItem('username');
+    if (username) {
+        // 如果用戶已經登入，顯示「你好，username」和登出按鈕
+        const mainContent = document.querySelector('main');
+        mainContent.innerHTML = '';  // 清空現有內容
 
-    
-    // 登入功能
-    async function loginUser(event) {
-        event.preventDefault();
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
+        const userGreeting = document.createElement('div');
+        userGreeting.style.textAlign = 'center';
+        userGreeting.style.color = 'white';
+        userGreeting.style.padding = '50px';
+        userGreeting.innerHTML = `
+            <h1>你好，${username}</h1>
+            <button onclick="logout()" style="padding: 10px 20px; font-size: 1.2rem; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                登出
+            </button>
+        `;
+        mainContent.appendChild(userGreeting);
+    } else {
+        // 如果用戶未登入，顯示登入表單
+        showLoginForm();
+    }
+});
 
-        const payload = { email, password };
+// 登入處理函數
+async function loginUser(event) {
+    event.preventDefault();
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+    const payload = { email, password };
 
-            const data = await response.json();
-            if (response.ok) {
-                alert("登入成功！");
-                window.location.href = "home.html";  // 根據需要修改為您的首頁URL
-                // fetchUserInfo(email);
-            } else {
-                alert("登入失敗: " + data.message);
-            }
-        } catch (error) {
-            alert("錯誤：" + error.message);
+    try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert("登入成功！");
+            // 儲存用戶名到 sessionStorage
+            sessionStorage.setItem('username', data.username);  // 假設後端返回用戶名
+
+            // 更新頁面顯示
+            const mainContent = document.querySelector('main');
+            mainContent.innerHTML = ''; // 清空原本的內容
+
+            const userGreeting = document.createElement('div');
+            userGreeting.style.textAlign = 'center';
+            userGreeting.style.color = 'white';
+            userGreeting.style.padding = '50px';
+            userGreeting.innerHTML = `
+                <h1>你好，${data.username}</h1>
+                <button onclick="logout()" style="padding: 10px 20px; font-size: 1.2rem; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                    登出
+                </button>
+            `;
+            mainContent.appendChild(userGreeting);
+
+        } else {
+            alert("登入失敗: " + data.message);
         }
+    } catch (error) {
+        alert("錯誤：" + error.message);
+    }
+}
+
+// 顯示登入表單
+function showLoginForm() {
+    const mainContent = document.querySelector('main');
+    mainContent.innerHTML = `
+        <section class="login-section">
+            <div class="login-container">
+                <h2>會員登入</h2>
+                <form onsubmit="loginUser(event)" class="login-form">
+                    <label for="login-email">電子郵件：</label>
+                    <input type="email" id="login-email" name="email" placeholder="請輸入電子郵件" required>
+        
+                    <label for="login-password">密碼：</label>
+                    <input type="password" id="login-password" name="password" placeholder="請輸入密碼" required>
+        
+                    <div class="login-buttons">
+                        <button type="submit" class="login-btn">登入</button>
+                        <a href="register.html" class="register-link">還沒有帳號？註冊</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    `;
+}
+
+// 登出處理函數
+function logout() {
+    // 清除 sessionStorage 中的用戶名
+    sessionStorage.removeItem('username');
+    
+    // 恢復原本頁面的內容（顯示登入表單）
+    showLoginForm();
 }
 
   </script>
@@ -154,64 +227,15 @@
         <i class="icon-search" onclick="openSearchModal()">🔍</i>
         <i class="icon-message" onclick="openContactModal()">💬</i>
         <i class="icon-login" onclick="openLoginModal()">👤</i>
-        <a href=""><i class="icon-cart">🛒</i></a>
+        <i class="icon-cart" onclick="openCartModal()">🛒</i>
       </div>
     </nav>
   </header>
 
-  <!-- 搜尋模態框 -->
-  <div class="search-modal" id="searchModal">
-    <span class="close-btn" onclick="closeSearchModal()">✖</span>
-    <h2>找商品</h2>
-    <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
-  </div>
-
   <!-- 主內容區 -->
-  <main>
-    <!-- 登入頁面 -->
-    <section class="login-section">
-        <div class="login-container">
-          <h2>會員登入</h2>
-          <form onsubmit="loginUser(event)" class="login-form">
-            <label for="login-email">電子郵件：</label>
-            <input type="email" id="login-email" name="email" placeholder="請輸入電子郵件" required>
-      
-            <label for="login-password">密碼：</label>
-            <input type="password" id="login-password" name="password" placeholder="請輸入密碼" required>
-      
-            <div class="login-buttons">
-              <button type="submit" class="login-btn">登入</button>
-              <a href="register.html" class="register-link">還沒有帳號？註冊</a>
-            </div>
-          </form>
-        </div>
-      </section>
-      
+  <main id="main-content">
+    <!-- 登入表單會在這裡動態插入 -->
   </main>
-  <!-- 搜尋模態框 -->
-<div class="search-modal" id="searchModal">
-  <span class="close-btn" onclick="closeSearchModal()">✖</span>
-  <h2>找商品</h2>
-  <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
-</div>
-  <!-- 聯絡我們模態框 -->
-  <div class="contact-modal" id="contactModal">
-    <div class="contact-modal-content">
-      <span class="close-btn" onclick="closeContactModal()">✖</span>
-      <h2>聯絡我們</h2>
-      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
-      <input type="email" id="email" placeholder="輸入你的電子信箱">
-      <span class="error" id="emailError">請填電郵</span>
-      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
-      <span class="error" id="messageError">請填寫訊息</span>
-      <button onclick="submitContactForm()">發送</button>
-    </div>
-  </div>
-  <script src="search.js"></script>
 
-
-  <!-- 頁尾 -->
-  <footer>
-    <p><h1>此網頁無商業用途，做作業用的</h1></p>
-  </footer>
-
+</body>
+</html>

@@ -5,6 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東大爬爬</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    async function handleAddToCart(productName, price) {
+      const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 這是你的 API Gateway URL
+  
+      const requestData = {
+        productName: productName,
+        price: price
+      };
+  
+      try {
+        const response = await fetch(`${apiEndpoint}/product`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert('商品已加入購物車！');
+        } else {
+          alert('操作失敗：' + result.message);
+        }
+      } catch (error) {
+        alert('發送請求時發生錯誤！');
+        console.error(error);
+      }
+    }
+  </script>
+  
   <style>
     /* 全局樣式 */
     body {
@@ -149,7 +181,8 @@
             <i class="icon-search" onclick="openSearchModal()">🔍</i>
             <i class="icon-message" onclick="openContactModal()">💬</i>
             <i class="icon-login" onclick="openLoginModal()">👤</i>
-          <a href="cart.html"><i class="icon-cart">🛒</i></a>
+            <i class="icon-cart" onclick="openCartModal()">🛒</i>
+
         </div>
       </nav>
   </header>
@@ -172,6 +205,8 @@
       <button onclick="submitContactForm()">發送</button>
     </div>
   </div>
+  
+
   <!-- 主內容區 -->
   <main>
     <section class="product-section">
@@ -187,107 +222,168 @@
       </div>
       <div class="product-grid">
         <div class="product-card">
-          <img src="大黃蜂蟾蜍.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
+          <img src="大黃蜂蟾蜍.jpg" alt="商品圖片" style="width: 300px; height: 300px;">
           <h3>大黃蜂蟾蜍</h3>
           <p>NT$3,600</p>
+          <!-- 加號按鈕 -->
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
         <div class="product-card">
           <img src="肥尾守宮·normal.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
           <h3>肥尾守宮·normal</h3>
           <p>NT$1,800</p>
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
         <div class="product-card">
           <img src="球蟒 · 火豹紋恩奇.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
           <h3>球蟒 · 火豹紋恩奇</h3>
           <p>NT$6,000</p>
+          <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+            +
+          </button>
         </div>
         <div class="product-card">
             <img src="肥尾守宮．WO Oreo het Patty.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>肥尾守宮．WO Oreo het Patty</h3>
             <p class="old-price">NT$4,500</p>
             <p>NT$3,680</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="南美角蛙l.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>南美角蛙</h3>
             <p>NT$1,000</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="蘇卡達象龜.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>蘇卡達象龜</h3>
             <p>NT$2,000</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="赫曼陸龜.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>赫曼陸龜</h3>
             <p>NT$1,100</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="鬆獅蜥·zero .jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>鬆獅蜥·zero</h3>
             <p>NT$4,500</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="豹紋守宮·黑夜.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>豹紋守宮·黑夜</h3>
             <p>NT$15,000</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="肥尾守宮：Oreo.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>肥尾守宮：Oreo</h3>
             <p class="old-price">NT$4,880</p>
             <p>NT$3,680</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="波子角蛙.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>【限時優惠】波子角蛙</h3>
             <p class="old-price">NT$7,600</p>
             <p>NT$1,800 </p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="兩棲爬蟲．躲藏樹洞.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>兩棲爬蟲．躲藏樹洞</h3>
             <p>NT$150</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="高動力 · 水龜飼料.jpg" alt="高動力 · 水龜飼料"style="width: 300px; height: 300px;">
             <h3>高夠力 · 水龜飼料</h3>
             <p>NT$135 </p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="Rep-Cal 爬蟲專用D3鈣粉.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>Rep-Cal 爬蟲專用D3鈣粉</h3>
             <p>NT$350</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="Rep-Cal 爬蟲專用綜合維生素.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>Rep-Cal 爬蟲專用綜合維生素</h3>
             <p>NT$350</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="防逃脫食盆.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>防逃脫食盆</h3>
             <p>NT$100</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="壓克力飼養箱.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>壓克力飼養箱</h3>
             <p>NT$1,000</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="兩棲爬蟲．岩洞躲避屋.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>兩棲爬蟲．岩洞躲避屋</h3>
             <p>NT$200</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="兩棲爬蟲 · 不銹鋼餵食夾.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
             <h3>兩棲爬蟲 · 不銹鋼餵食夾</h3>
             <p>NT$250</p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
           <div class="product-card">
             <img src="兩棲爬蟲 · 犀牛頭骨躲藏洞.jpg" alt="兩棲爬蟲 · 犀牛頭骨躲藏洞"style="width: 300px; height: 300px;">
             <h3>兩棲爬蟲 · 犀牛頭骨躲藏洞</h3>
             <p>NT$360 </p>
+            <button class="plus-icon" onclick="handleAddToCart('高動力 · 水龜飼料', 135)">
+              +
+            </button>
           </div>
       </div>
     </section>
@@ -296,7 +392,7 @@
   <!-- 頁尾 -->
   <footer>
     <p><h1>此網頁無商業用途，做作業用的</h1></p>
-  </footer>
+  </footer>           
   <script src="search.js"></script>
 </body>
 </html>

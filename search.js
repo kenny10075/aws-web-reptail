@@ -117,4 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
       closeContactModal();
     }
   }
+  function openCartModal(){
+    window.location.href = 'cart.html';
+  }
   
