@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>伴獸人</title>
+  <title>東大爬爬</title>
   <script>
     const API_BASE_URL = "https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com";
 
@@ -136,7 +136,7 @@
   <!-- 導航欄 -->
   <header>
     <nav class="navbar">
-      <div class="logo">伴獸人 THE ORCS</div>
+      <div class="logo">東大爬爬</div>
       <ul class="nav-links">
         <li><a href="home.html">首頁</a></li>
         <li><a href="about.html">關於我們</a></li>
@@ -153,7 +153,7 @@
       <div class="nav-icons">
         <i class="icon-search" onclick="openSearchModal()">🔍</i>
         <i class="icon-message" onclick="openContactModal()">💬</i>
-        <a href="login.html"><i class="icon-login">👤</i></a>
+        <i class="icon-login" onclick="openLoginModal()">👤</i>
         <a href=""><i class="icon-cart">🛒</i></a>
       </div>
     </nav>
@@ -207,7 +207,7 @@
       <button onclick="submitContactForm()">發送</button>
     </div>
   </div>
-
+  <script src="search.js"></script>
 
 
   <!-- 頁尾 -->

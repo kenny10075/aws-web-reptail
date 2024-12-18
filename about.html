@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>伴獸人</title>
+  <title>東大爬爬</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- 導航欄 -->
   <header>
     <nav class="navbar">
-        <div class="logo">伴獸人 THE ORCS</div>
+        <div class="logo">東大爬爬</div>
         <ul class="nav-links">
           <li><a href="home.html">首頁</a></li>
           <li><a href="about.html">關於我們</a></li>
@@ -26,8 +26,8 @@
         </ul>
         <div class="nav-icons">
             <i class="icon-search" onclick="openSearchModal()">🔍</i>
-          <a href="contact.html"><i class="icon-message">💬</i></a>
-          <a href="login.html"><i class="icon-login">👤</i></a>
+            <i class="icon-message" onclick="openContactModal()">💬</i>
+            <i class="icon-login" onclick="openLoginModal()">👤</i>
           <a href="cart.html"><i class="icon-cart">🛒</i></a>
         </div>
       </nav>
@@ -38,6 +38,19 @@
     <h2>找商品</h2>
     <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
   </div>
+  <!-- 聯絡我們模態框 -->
+  <div class="contact-modal" id="contactModal">
+    <div class="contact-modal-content">
+      <span class="close-btn" onclick="closeContactModal()">✖</span>
+      <h2>聯絡我們</h2>
+      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
+      <input type="email" id="email" placeholder="輸入你的電子信箱">
+      <span class="error" id="emailError">請填電郵</span>
+      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
+      <span class="error" id="messageError">請填寫訊息</span>
+      <button onclick="submitContactForm()">發送</button>
+    </div>
+  </div>
   <!-- 主內容區 -->
   <main>
     <h1>關於我們</h1>
@@ -46,7 +59,7 @@
 
   <!-- 頁尾 -->
   <footer>
-    <p>© 2024 伴獸人. All rights reserved.</p>
+    <p><h1>此網頁無商業用途，做作業用的</h1></p>
   </footer>
   <script src="search.js"></script>
 </body>

@@ -244,4 +244,76 @@ footer {
   font-size: 0.8rem;
 }
 
+
+
+
+/* 登入頁面樣式 */
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #000000; /* 背景顏色 */
+}
+
+.login-container {
+  background: #fff;
+  padding: 100px 100px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+.login-container h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.login-form label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #555;
+  font-size: 14px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.login-btn:hover {
+  background-color: #45a049;
+}
+
+.register-link {
+  font-size: 12px;
+  text-decoration: none;
+  color: #4CAF50;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
  

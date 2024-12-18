@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>伴獸人</title>
+  <title>東大爬爬</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     /* 全局樣式 */
@@ -130,7 +130,7 @@
   <!-- 導航欄 -->
   <header>
     <nav class="navbar">
-        <div class="logo">伴獸人 THE ORCS</div>
+        <div class="logo">東大爬爬</div>
         <ul class="nav-links">
           <li><a href="home.html">首頁</a></li>
           <li><a href="about.html">關於我們</a></li>
@@ -147,8 +147,8 @@
         </ul>
         <div class="nav-icons">
             <i class="icon-search" onclick="openSearchModal()">🔍</i>
-          <a href="contact.html"><i class="icon-message">💬</i></a>
-          <a href="login.html"><i class="icon-login">👤</i></a>
+            <i class="icon-message" onclick="openContactModal()">💬</i>
+            <i class="icon-login" onclick="openLoginModal()">👤</i>
           <a href="cart.html"><i class="icon-cart">🛒</i></a>
         </div>
       </nav>
@@ -158,6 +158,19 @@
     <span class="close-btn" onclick="closeSearchModal()">✖</span>
     <h2>找商品</h2>
     <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
+  </div>
+  <!-- 聯絡我們模態框 -->
+  <div class="contact-modal" id="contactModal">
+    <div class="contact-modal-content">
+      <span class="close-btn" onclick="closeContactModal()">✖</span>
+      <h2>聯絡我們</h2>
+      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
+      <input type="email" id="email" placeholder="輸入你的電子信箱">
+      <span class="error" id="emailError">請填電郵</span>
+      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
+      <span class="error" id="messageError">請填寫訊息</span>
+      <button onclick="submitContactForm()">發送</button>
+    </div>
   </div>
   <!-- 主內容區 -->
   <main>
@@ -170,17 +183,13 @@
             <option>價格從高到低</option>
             <option>價格從低到高</option>
           </select>
-          <select>
-            <option>每頁顯示 24 個</option>
-            <option>每頁顯示 48 個</option>
-          </select>
         </div>
       </div>
       <div class="product-grid">
         <div class="product-card">
           <img src="大黃蜂蟾蜍.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
           <h3>大黃蜂蟾蜍</h3>
-          <p>NT$3,600 ~ NT$6,800</p>
+          <p>NT$3,600</p>
         </div>
         <div class="product-card">
           <img src="肥尾守宮·normal.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
@@ -233,7 +242,7 @@
             <img src="波子角蛙.jpg" alt="商品圖片"style="width: 300px; height: 300px;">
             <h3>【限時優惠】波子角蛙</h3>
             <p class="old-price">NT$7,600</p>
-            <p>NT$1,800 ~ NT$3,600</p>
+            <p>NT$1,800 </p>
           </div>
           <div class="product-card">
             <img src="兩棲爬蟲．躲藏樹洞.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
@@ -242,8 +251,8 @@
           </div>
           <div class="product-card">
             <img src="高動力 · 水龜飼料.jpg" alt="高動力 · 水龜飼料"style="width: 300px; height: 300px;">
-            <h3>高動力 · 水龜飼料</h3>
-            <p>NT$135 ~ NT$625</p>
+            <h3>高夠力 · 水龜飼料</h3>
+            <p>NT$135 </p>
           </div>
           <div class="product-card">
             <img src="Rep-Cal 爬蟲專用D3鈣粉.jpg" alt="兩棲爬蟲 · 不銹鋼餵食夾"style="width: 300px; height: 300px;">
@@ -278,7 +287,7 @@
           <div class="product-card">
             <img src="兩棲爬蟲 · 犀牛頭骨躲藏洞.jpg" alt="兩棲爬蟲 · 犀牛頭骨躲藏洞"style="width: 300px; height: 300px;">
             <h3>兩棲爬蟲 · 犀牛頭骨躲藏洞</h3>
-            <p>NT$360 ~ NT$680</p>
+            <p>NT$360 </p>
           </div>
       </div>
     </section>
@@ -286,7 +295,7 @@
 
   <!-- 頁尾 -->
   <footer>
-    <p>© 2024 伴獸人. All rights reserved.</p>
+    <p><h1>此網頁無商業用途，做作業用的</h1></p>
   </footer>
   <script src="search.js"></script>
 </body>
