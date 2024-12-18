@@ -18,8 +18,13 @@ header {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center; /* 文字和圖片垂直對齊 */
+}
+
+.logo img {
+  margin-left: 8px; /* 圖片與文字之間的間距 */
+  height: 80px; /* 根據需求調整圖片大小 */
 }
 
 .nav-links {
