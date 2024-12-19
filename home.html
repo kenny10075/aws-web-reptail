@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles.css">
+  <link type="image/png" sizes="96x96" rel="icon" href="gecko.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>東大爬爬</title>
   <style>
@@ -103,7 +104,11 @@
   <!-- 導航欄 -->
   <header>
     <nav class="navbar">
-      <div class="logo">東大爬爬</div>
+      <div class="logo">
+        <a href="home.html">
+          <img src="gecko.png" alt="EUPH Logo">
+        </a>
+      </div>
       <ul class="nav-links">
         <li><a href="home.html">首頁</a></li>
         <li><a href="about.html">關於我們</a></li>
@@ -136,9 +141,31 @@
   <!-- 主內容區 -->
   <main>
     <section class="hero-section">
-      <div class="hero-content">
-        <h1>每週新品</h1>
-        <p>每週六中午十二點準時上架<br>週週更新 週週有驚喜</p>
+      <div class="static-display" style="display: flex; flex-direction: column; align-items: center; margin-top: -200px; ">
+        <div class="images-container" style="display: flex; justify-content: space-around; width: 80%; gap: 120px;margin-left: -1000px">
+          <div>
+            <img src="EUPH.png" alt="Timpani" style="max-width: 150px; height: auto;">
+          </div>
+          <div>
+            <img src="TIMPANI.png" alt="Timpani" style="max-width: 150px; height: auto;">
+          </div>
+          <div>
+            <img src="TRIANGLE.png" alt="Triangle" style="max-width: 150px; height: auto;">
+          </div>
+          <div>
+            <img src="BELLS.png" alt="Bells" style="max-width: 150px; height: auto;">
+          </div>
+          <div>
+            <img src="CMD.png" alt="CMD" style="max-width: 150px; height: auto;">
+          </div>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <h1>每週新品</h1>
+          <p>每週六中午十二點準時上架<br>週週更新 週週有驚喜</p><h1><br>點擊箭頭會出現酷東西喔!!!</h1>
+        </div>
+      </div>
+      
+      
         <!-- 向下滾動箭頭 -->
       <div class="scroll-down" onclick="scrollToBottom()">
         <img src="箭頭.png" alt="向下箭頭"style="width: 100px; height: 100px;">
@@ -184,18 +211,19 @@
   <input type="text" id="searchInput" placeholder="輸入關鍵字" onkeypress="handleSearch(event)">
 </div>
   <!-- 聯絡我們模態框 -->
-  <div class="contact-modal" id="contactModal">
-    <div class="contact-modal-content">
-      <span class="close-btn" onclick="closeContactModal()">✖</span>
-      <h2>聯絡我們</h2>
-      <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
-      <input type="email" id="email" placeholder="輸入你的電子信箱">
-      <span class="error" id="emailError">請填電郵</span>
-      <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
-      <span class="error" id="messageError">請填寫訊息</span>
-      <button onclick="submitContactForm()">發送</button>
-    </div>
+<div class="contact-modal" id="contactModal">
+  <div class="contact-modal-content">
+    <span class="close-btn" onclick="closeContactModal()">✖</span>
+    <h2>聯絡我們</h2>
+    <p>請留下您的資訊與訊息，我們將儘快回覆您！</p>
+    <input type="email" id="email" placeholder="輸入你的電子信箱">
+    <span class="error" id="emailError">請填電郵</span>
+    <textarea id="message" rows="4" placeholder="輸入你的訊息"></textarea>
+    <span class="error" id="messageError">請填寫訊息</span>
+    <button onclick="submitContactForm()">發送</button>
   </div>
+</div>
+
 
 
 
