@@ -3,8 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>伴獸人</title>
+  <title>東大爬爬</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    async function handleAddToCart(productName, price) {
+      const apiEndpoint = 'https://pl5zekcuk9.execute-api.us-east-1.amazonaws.com'; // 這是你的 API Gateway URL
+  
+      const requestData = {
+        productName: productName,
+        price: price
+      };
+  
+      try {
+        const response = await fetch(`${apiEndpoint}/product`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert('商品已加入購物車！');
+        } else {
+          alert('操作失敗：' + result.message);
+        }
+      } catch (error) {
+        alert('發送請求時發生錯誤！');
+        console.error(error);
+      }
+    }
+    function handleSearch(event) {
+  if (event.key === 'Enter') {
+      const query = event.target.value.trim().toLowerCase();
+      const matches = products.filter(product =>
+          product.name.toLowerCase().includes(query)
+      );
+
+      // 跳轉到 search.html 並傳遞搜尋結果
+      if (matches.length > 0) {
+          const searchResults = matches.map(product => ({
+              img: product.img,
+              name: product.name,
+              oldPrice: product.oldPrice || null,
+              price: product.price
+          }));
+          
+          // 將搜尋結果存入 localStorage 以便於 search.html 使用
+          localStorage.setItem('searchResults', JSON.stringify(searchResults));
+          window.location.href = 'search.html';
+      } else {
+          alert("目前無此商品喔!!!");
+      }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const productGrid = document.querySelector('.product-grid1');
+  const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+
+  if (searchResults && searchResults.length > 0) {
+      productGrid.innerHTML = ''; // 清空原始內容
+      searchResults.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.classList.add('product-card');
+
+          productCard.innerHTML = `
+              <img src="${product.img}" alt="商品圖片" style="width: 300px; height: 300px;">
+              <h3>${product.name}</h3>
+              <p>NT$${product.price}</p>
+              <button class="plus-icon" onclick="handleAddToCart('${product.name}', ${product.price.replace(',', '')})">+</button>
+          `;
+          productGrid.appendChild(productCard);
+      });
+  } 
+});
+  </script>
   <style>
     /* 全局樣式 */
     body {
@@ -125,7 +201,10 @@
   <!-- 導航欄 -->
   <header>
     <nav class="navbar">
-        <div class="logo">東大爬爬</div>
+      <div class="logo">
+        <h1>東大爬爬</h1>
+        <img src="EUPH.png" alt="EUPH Logo">
+      </div>
         <ul class="nav-links">
           <li><a href="home.html">首頁</a></li>
           <li><a href="about.html">關於我們</a></li>
