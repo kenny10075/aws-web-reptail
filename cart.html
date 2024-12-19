@@ -123,12 +123,15 @@
           <label>宅配地址：</label>
           <input type="text" id="address" placeholder="輸入宅配地址">
           <label>付款方式：</label>
-          <input type="text" value="信用卡付款" disabled>
+          <input type="text" value="貨到付款" disabled>
         </div>
         <button class="clear-btn" onclick="deleteAllCartItems()">全部刪除</button>
         <button class="return-btn" onclick="goBack()">返回</button>
         <button class="pay-btn" onclick="processPayment()">付款</button>
+        <div class="total-price" id="totalPrice">總金額: NT$0</div>
       </div>
+     
+
     
   </main>
   <!-- 搜尋模態框 -->
@@ -176,9 +179,10 @@ async function fetchCartItems() {
 
 function displayCartItems(cartItems) {
   const cartContainer = document.getElementById('cartItems');
+  const totalPriceElement = document.getElementById('totalPrice');
 
-  cartContainer.innerHTML = cartItems.length
-    ? cartItems.map(item => `
+  if (cartItems.length) {
+    cartContainer.innerHTML = cartItems.map(item => `
         <div class="cart-item">
           <div>
             <h3>${item.productName}</h3>
@@ -186,8 +190,15 @@ function displayCartItems(cartItems) {
           </div>
           <button class="delete-btn" onclick="deleteCartItem('${item.id}')">刪除</button>
         </div>
-      `).join('')
-    : '<p>您的購物車是空的</p>';
+      `).join('');
+
+    // 計算總價格
+    const totalPrice = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    totalPriceElement.textContent = `總金額: NT$${totalPrice}`;
+  } else {
+    cartContainer.innerHTML = '<p>您的購物車是空的</p>';
+    totalPriceElement.textContent = '總金額: NT$0';
+  }
 }
 
 // 初始化購物車
@@ -197,19 +208,52 @@ fetchCartItems();
       window.location.href = 'home.html'; // 返回首頁
     }
 
-    function processPayment() {
-      const phone = document.getElementById('phone').value;
-      const address = document.getElementById('address').value;
+async function processPayment() {
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
 
-      if (!phone || !address) {
-        alert('請填寫完整的電話號碼和宅配地址！');
-        return;
-      }
+  if (!phone || !address) {
+    alert('請填寫完整的電話號碼和宅配地址！');
+    return;
+  }
 
-      alert('付款成功！商品即將配送到您的地址。');
-      localStorage.removeItem('cart'); // 清空購物車
-      window.location.href = 'home.html'; // 返回首頁
+  try {
+    // 向 API 取得購物車資料
+    const response = await fetch(`${apiEndpoint}/product`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!response.ok) {
+      throw new Error('無法獲取購物車資料');
     }
+
+    const cartData = await response.json();
+    const cartItems = cartData.items;
+
+    // 計算總價格
+    const totalPrice = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    if (totalPrice==0){
+      alert("商品是空的")
+    }
+    else{
+        alert(`付款成功！總金額為 NT$${totalPrice}，商品即將配送到您的地址。`);
+
+      // 清空購物車
+        await deleteAllCartItems();
+
+      // 返回首頁
+      window.location.href = 'home.html';
+
+    }
+
+    // 顯示付款成功和總價格
+    
+  } catch (error) {
+    console.error('錯誤：', error);
+    alert('付款失敗，請稍後再試！');
+  }
+}
     displayCartItems();
 
     async function deleteCartItem(productId) {
