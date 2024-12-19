@@ -356,3 +356,38 @@ footer {
 .plus-icon:hover {
   background-color: #45a049; /* 懸停時的顏色 */
 }
+
+
+
+.cart-container {
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-right: 10px;
+  padding: 10px 20px;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+.total-price {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4CAF50;
+}
